@@ -23,3 +23,19 @@ class Script(models.Model):
 
     class Meta:
         pass
+
+
+class Input(models.Model):
+    source_uri = models.CharField(max_length=200)
+    destination_path = models.CharField(max_length=200)
+
+    job = models.ForeignKey(Job, related_name='inputs', on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return " ".join([self.source_uri, self.destination_path])
+
+    class Meta:
+        pass
+
+
+# If `related_name` is absent, then the reverse attribute is called `script_set`

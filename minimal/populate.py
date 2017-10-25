@@ -1,17 +1,3 @@
-# from jobs.models import Job, Script
-# from jobs.serializers import JobSerializer
-# from rest_framework.renderers import JSONRenderer
-# from rest_framework.parsers import JSONParser
-#
-# job = Job.objects.create(description='job description')
-# Script.objects.create(job=job, description="script description")
-# Script.objects.create(job=job, description="another description")
-#
-# serializer = JobSerializer(instance=job)
-# content = JSONRenderer().render(serializer.data)
-
-
-
 from jobs.models import Job, Script
 from jobs.serializers import JobSerializer
 from rest_framework.renderers import JSONRenderer
