@@ -10,7 +10,7 @@ class Command(BaseCommand):
         # create a job
         job = Job(
             name='test job',
-            description='test desciption',
+            description='test description',
             status='test status',
             uri='test uri',
             user='test user',

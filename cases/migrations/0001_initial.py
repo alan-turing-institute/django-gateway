@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Input',
+            name='InputTemplate',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('source_uri', models.CharField(max_length=200)),
@@ -23,33 +23,47 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Job',
+            name='JobTemplate',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('backend_identifier', models.CharField(max_length=200)),
+                ('backend_identifier', models.CharField(max_length=200, null=True)),
                 ('description', models.CharField(max_length=200)),
                 ('name', models.CharField(max_length=200)),
-                ('status', models.CharField(max_length=200)),
-                ('uri', models.CharField(max_length=200)),
-                ('user', models.CharField(max_length=200)),
-                ('creation_datetime', models.DateTimeField(auto_now_add=True)),
+                ('status', models.CharField(max_length=200, null=True)),
+                ('uri', models.CharField(max_length=200, null=True)),
+                ('user', models.CharField(max_length=200, null=True)),
+                ('creation_datetime', models.DateTimeField(null=True)),
                 ('start_datetime', models.DateTimeField(null=True)),
                 ('end_datetime', models.DateTimeField(null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Script',
+            name='ScriptTemplate',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('source_uri', models.CharField(max_length=200)),
                 ('destination_path', models.CharField(max_length=200)),
                 ('action', models.CharField(max_length=20)),
-                ('job', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='scripts', to='jobs.Job')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Case',
+            fields=[
+                ('uri', models.CharField(max_length=200)),
+                ('label', models.CharField(max_length=200)),
+                ('thumbnail', models.CharField(max_length=200)),
+                ('description', models.CharField(max_length=200)),
+                ('job', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='case', serialize=False, to='cases.JobTemplate')),
             ],
         ),
         migrations.AddField(
-            model_name='input',
+            model_name='scripttemplate',
             name='job',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='inputs', to='jobs.Job'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='scripts', to='cases.JobTemplate'),
+        ),
+        migrations.AddField(
+            model_name='inputtemplate',
+            name='job',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='inputs', to='cases.JobTemplate'),
         ),
     ]
