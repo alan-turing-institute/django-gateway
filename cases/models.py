@@ -1,8 +1,9 @@
 from django.db import models
 
+# define base abstract model classes, to be inherited
+
 
 class Case(models.Model):
-
     uri = models.CharField(max_length=200)
     label = models.CharField(max_length=200)
     thumbnail = models.CharField(max_length=200)
@@ -19,70 +20,44 @@ class Case(models.Model):
         pass
 
 
-class JobTemplate(models.Model):
+class JobBase(models.Model):
     backend_identifier = models.CharField(max_length=200, null=True)
-    description = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True)
+    name = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200, null=True)
     uri = models.CharField(max_length=200, null=True)
-    user = models.CharField(max_length=200, null=True)
-
-    creation_datetime = models.DateTimeField(
-        auto_now_add=False, null=True)
-    start_datetime = models.DateTimeField(
-        auto_now_add=False, null=True)
-    end_datetime = models.DateTimeField(
-        auto_now_add=False, null=True)
-
-    #
-    # def __str__(self):
-    #     return self.description
 
     class Meta:
-        pass
-        # ordering = ('creation_datetime', 'description',)
+        abstract = True
 
 
-class ScriptTemplate(models.Model):
+class ScriptBase(models.Model):
     source_uri = models.CharField(max_length=200)
     destination_path = models.CharField(max_length=200)
     action = models.CharField(max_length=20)
 
-    job = models.ForeignKey(JobTemplate, related_name='scripts', on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return " ".join([self.source_uri, self.destination_path, self.action])
-
     class Meta:
-        pass
+        abstract = True
 
 
-class InputTemplate(models.Model):
+class InputBase(models.Model):
     source_uri = models.CharField(max_length=200)
     destination_path = models.CharField(max_length=200)
 
-    job = models.ForeignKey(JobTemplate, related_name='inputs', on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return " ".join([self.source_uri, self.destination_path])
-
     class Meta:
-        pass
+        abstract = True
 
 
-class FamilyTemplate(models.Model):
-
+class FamilyBase(models.Model):
     collapse = models.BooleanField()
     label = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
 
-    job = models.ForeignKey(JobTemplate, related_name='families', on_delete=models.CASCADE, null=True)
+    class Meta:
+        abstract = True
 
 
-class ParameterTemplate(models.Model):
-
-    family = models.ForeignKey(FamilyTemplate, related_name='parameters', on_delete=models.CASCADE, null=True)
-
+class ParameterBase(models.Model):
     enabled = models.BooleanField()
     help = models.CharField(max_length=200)
     label = models.CharField(max_length=200)
@@ -95,3 +70,31 @@ class ParameterTemplate(models.Model):
     type_value = models.CharField(max_length=200)
     units = models.CharField(max_length=200)
     value = models.FloatField()
+
+    class Meta:
+        abstract = True
+
+
+class JobTemplate(JobBase):
+    creation_datetime = models.DateTimeField(
+        auto_now_add=False, null=True)
+    start_datetime = models.DateTimeField(
+        auto_now_add=False, null=True)
+    end_datetime = models.DateTimeField(
+        auto_now_add=False, null=True)
+
+
+class ScriptTemplate(ScriptBase):
+    job = models.ForeignKey(JobTemplate, related_name='scripts', on_delete=models.CASCADE, null=True)
+
+
+class InputTemplate(InputBase):
+    job = models.ForeignKey(JobTemplate, related_name='inputs', on_delete=models.CASCADE, null=True)
+
+
+class FamilyTemplate(FamilyBase):
+    job = models.ForeignKey(JobTemplate, related_name='families', on_delete=models.CASCADE, null=True)
+
+
+class ParameterTemplate(ParameterBase):
+    family = models.ForeignKey(FamilyTemplate, related_name='parameters', on_delete=models.CASCADE, null=True)

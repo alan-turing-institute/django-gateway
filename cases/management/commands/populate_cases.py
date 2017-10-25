@@ -4,13 +4,12 @@ from cases.models import (
     InputTemplate, ParameterTemplate, FamilyTemplate
     )
 
+
 class Command(BaseCommand):
     args = ''
     help = 'Populate cases database with test data'
 
-
     def _create_cases(self):
-
 
         # create a family
         family_template = FamilyTemplate(
@@ -36,10 +35,8 @@ class Command(BaseCommand):
         )
         parameter_template.save()
 
-
         family_template.parameters.add(parameter_template)
         family_template.save()
-
 
         # create a script
         script_template = ScriptTemplate(
@@ -61,7 +58,7 @@ class Command(BaseCommand):
             description='test description',
             status='test status',
             uri='test uri',
-            user='test user',
+            backend_identifier='test backend_identifier',
             )
         job_template.save()
         job_template.scripts.add(script_template)
@@ -81,7 +78,6 @@ class Command(BaseCommand):
 
         case.job = job_template
         case.save()
-
 
     def handle(self, *args, **options):
         self._create_cases()

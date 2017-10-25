@@ -4,7 +4,7 @@ from cases import views
 
 urlpatterns = [
     url(r'^cases/$', views.CaseList.as_view()),
-    url(r'^cases/(?P<pk>[0-9]+)/$', views.CaseDetail.as_view()),
+    url(r'^cases/(?P<pk>[0-9]+)/$', views.CaseToJob.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -56,7 +56,6 @@ class JobTemplateSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'uri',
-            'user',
             'creation_datetime',
             'start_datetime',
             'end_datetime',

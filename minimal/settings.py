@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'cases.apps.CasesConfig',
     'jobs.apps.JobsConfig',
-    'sandbox.apps.SandboxConfig',
 ]
 
 MIDDLEWARE = [
