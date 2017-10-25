@@ -1,6 +1,7 @@
 #!/bin/sh
 
-echo "Removing files"
+echo "Removing migration history"
+rm -rvf db.sqlite3 
 rm -rvf db.sqlite3 cases/migrations
 rm -rvf db.sqlite3 jobs/migrations
 

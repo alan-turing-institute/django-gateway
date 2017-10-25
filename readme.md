@@ -1,8 +1,12 @@
 # Django Gateway
 
-
-
 Porting the Science Gateway project from Flask to Django.
+
+
+
+![](media/browser.png)
+
+
 
 ## Local deployment
 
@@ -22,6 +26,7 @@ The database can be populated using the `reset.sh` shell script. Currently its c
 #!/bin/sh
 
 echo "Removing migration history"
+rm -rvf db.sqlite3 
 rm -rvf db.sqlite3 cases/migrations
 rm -rvf db.sqlite3 jobs/migrations
 
