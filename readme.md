@@ -16,7 +16,7 @@ python manage.py runserver
 
 ## Initialisation
 
-The database can be populated using the `reset` shell script. Currently its contents is
+The database can be populated using the `reset.sh` shell script. Currently its contents is
 
 ```shell
 #!/bin/sh
