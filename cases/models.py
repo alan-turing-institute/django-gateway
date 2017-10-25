@@ -68,3 +68,30 @@ class InputTemplate(models.Model):
 
     class Meta:
         pass
+
+
+class FamilyTemplate(models.Model):
+
+    collapse = models.BooleanField()
+    label = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+
+    job = models.ForeignKey(JobTemplate, related_name='families', on_delete=models.CASCADE, null=True)
+
+
+class ParameterTemplate(models.Model):
+
+    family = models.ForeignKey(FamilyTemplate, related_name='parameters', on_delete=models.CASCADE, null=True)
+
+    enabled = models.BooleanField()
+    help = models.CharField(max_length=200)
+    label = models.CharField(max_length=200)
+    max_value = models.FloatField()
+    min_value = models.FloatField()
+    step = models.FloatField()
+
+    name = models.CharField(max_length=200)
+    type = models.CharField(max_length=200)
+    type_value = models.CharField(max_length=200)
+    units = models.CharField(max_length=200)
+    value = models.FloatField()

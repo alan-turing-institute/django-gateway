@@ -1,5 +1,8 @@
 from django.core.management.base import BaseCommand
-from cases.models import Case, JobTemplate, ScriptTemplate, InputTemplate
+from cases.models import (
+    Case, JobTemplate, ScriptTemplate,
+    InputTemplate, ParameterTemplate, FamilyTemplate
+    )
 
 class Command(BaseCommand):
     args = ''
@@ -7,6 +10,36 @@ class Command(BaseCommand):
 
 
     def _create_cases(self):
+
+
+        # create a family
+        family_template = FamilyTemplate(
+            collapse=True,
+            label='test_label',
+            name='test_name'
+        )
+        family_template.save()
+
+        # create a parameter
+        parameter_template = ParameterTemplate(
+            enabled=False,
+            help='test help',
+            label='test label',
+            max_value=10.0,
+            min_value=0.0,
+            step=0.1,
+            name='test name',
+            type='test type',
+            type_value='test type_value',
+            units='test units',
+            value=3.0,
+        )
+        parameter_template.save()
+
+
+        family_template.parameters.add(parameter_template)
+        family_template.save()
+
 
         # create a script
         script_template = ScriptTemplate(
@@ -22,7 +55,6 @@ class Command(BaseCommand):
         )
         input_template.save()
 
-
         # create a job template
         job_template = JobTemplate(
             name='test job',
@@ -34,6 +66,7 @@ class Command(BaseCommand):
         job_template.save()
         job_template.scripts.add(script_template)
         job_template.inputs.add(input_template)
+        job_template.families.add(family_template)
         job_template.save()
 
         # create a case
