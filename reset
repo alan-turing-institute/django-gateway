@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Removing files"
+rm -rvf db.sqlite3 jobs/migrations
+
+python manage.py makemigrations jobs
+python manage.py migrate jobs

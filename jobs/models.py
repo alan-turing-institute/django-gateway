@@ -1,14 +1,27 @@
 from django.db import models
 
-class Job(models.Model):
-    creation_datetime = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.description
+class Job(models.Model):
+    backend_identifier = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    status = models.CharField(max_length=200)
+    uri = models.CharField(max_length=200)
+    user = models.CharField(max_length=200)
+
+    creation_datetime = models.DateTimeField(
+        auto_now_add=True)
+    start_datetime = models.DateTimeField(
+        auto_now_add=False, null=True)
+    end_datetime = models.DateTimeField(
+        auto_now_add=False, null=True)
+    #
+    # def __str__(self):
+    #     return self.description
 
     class Meta:
-        ordering = ('creation_datetime', 'description',)
+        pass
+        # ordering = ('creation_datetime', 'description',)
 
 
 class Script(models.Model):
@@ -36,6 +49,3 @@ class Input(models.Model):
 
     class Meta:
         pass
-
-
-# If `related_name` is absent, then the reverse attribute is called `script_set`

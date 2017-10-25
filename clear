@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm -rvf db.sqlite3 jobs/migrations
+
+python manage.py makemigrations jobs
+python manage.py migrate jobs

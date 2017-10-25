@@ -1,16 +1,25 @@
-#
+# temporary used for pytest and patching
+
+
+# ignore database files
+*.db
 *.sqlite3
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
+# ssh keys
+keys/*
+
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
+env/
 build/
 develop-eggs/
 dist/
@@ -26,7 +35,6 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -55,8 +63,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-.static_storage/
-.media/
 local_settings.py
 
 # Flask stuff:
@@ -84,14 +90,13 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# dotenv
 .env
+
+# virtualenv
 .venv
-env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -105,3 +110,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Secrets file
+secrets.py
+
+# Log path
+.logs/
