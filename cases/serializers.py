@@ -40,7 +40,10 @@ class FamilyTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FamilyTemplate
-        fields = ('collapse', 'label', 'parameters')
+        fields = (
+            # 'collapse',
+            'label',
+            'parameters')
 
 
 class JobTemplateSerializer(serializers.ModelSerializer):

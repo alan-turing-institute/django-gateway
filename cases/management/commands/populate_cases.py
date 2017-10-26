@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
         # create a family
         family_template = FamilyTemplate(
-            collapse=True,
+            # collapse=True,
             label='test_label',
             name='test_name'
         )

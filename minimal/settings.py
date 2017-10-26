@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cases.apps.CasesConfig',
     'jobs.apps.JobsConfig',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [

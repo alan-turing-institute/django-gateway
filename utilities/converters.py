@@ -18,14 +18,15 @@ def parameter_template_to_parameter(parameter_template):
 
 def family_template_to_family(family_template):
     family = Family()
+    family.save()
 
     family.label = family_template.label
     family.name = family_template.name
-    family.collapse = family_template.collapse
+    # family.collapse = family_template.collapse
 
-    for parameter_template in family_template.parameters:
-        family.parameters.append(
-            parameter_template_to_parameter(parameter_template)
+    for parameter_template in family_template.parameters.all():
+        family.parameters.add(
+            parameter_template_to_parameter(parameter_template), bulk=False
         )
 
     return family
@@ -55,20 +56,19 @@ def case_to_job(case, job_id=None):
     # calls to Job.save() in order to build up object
 
     # job = Job(pk=job_id)
-    # job.save()
-
     job = Job()
+    job.save()
 
     job.description = case.job.description
     job.name = case.job.name
 
     for family_template in case.job.families.all():
-        job.families.add(family_template_to_family(family_template))
+        job.families.add(family_template_to_family(family_template), bulk=False)
 
     for script_template in case.job.scripts.all():
-        job.scripts.add(script_template_to_script(script_template))
+        job.scripts.add(script_template_to_script(script_template), bulk=False)
 
     for input_template in case.job.inputs.all():
-        job.inputs.add(input_template_to_input(input_template))
+        job.inputs.add(input_template_to_input(input_template), bulk=False)
 
     return job

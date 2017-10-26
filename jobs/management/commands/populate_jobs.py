@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from jobs.models import Job, Script, Input
+from jobs.models import Job, Script, Input, Family, Parameter
+
 
 class Command(BaseCommand):
     args = ''
@@ -35,9 +36,35 @@ class Command(BaseCommand):
         input_.save()
         job.inputs.add(input_)
 
+        # create a family
+        family = Family(
+            # collapse=True,
+            label='test_label',
+            name='test_name'
+        )
+        family.save()
+
+        # create a parameter
+        parameter = Parameter(
+            enabled=False,
+            help='test help',
+            label='test label',
+            max_value=10.0,
+            min_value=0.0,
+            step=0.1,
+            name='test name',
+            type='test type',
+            type_value='test type_value',
+            units='test units',
+            value=3.0,
+        )
+        parameter.save()
+
+        family.parameters.add(parameter)
+        family.save()
+        job.families.add(family)
 
         job.save()
-
 
 
     def handle(self, *args, **options):

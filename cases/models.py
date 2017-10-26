@@ -49,7 +49,7 @@ class InputBase(models.Model):
 
 
 class FamilyBase(models.Model):
-    collapse = models.BooleanField()
+    # collapse = models.BooleanField()
     label = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
 
